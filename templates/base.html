@@ -1,0 +1,235 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-green: #166534;
+            --secondary-green: #059669;
+            --light-green: #F0FDF4;
+            --accent-green: #16a34a;
+            --gradient-start: #059669;
+            --gradient-end: #166534;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 60px;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            padding: 1.2rem 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .navbar-brand i {
+            font-size: 1.8rem;
+            margin-right: 10px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            background: white;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        .card-title {
+            color: var(--primary-green);
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border: none;
+            box-shadow: 0 4px 6px rgba(22, 101, 52, 0.2);
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(22, 101, 52, 0.3);
+        }
+        
+        .btn-outline-success {
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+        }
+        
+        .btn-outline-success:hover {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-color: transparent;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin: 1rem 0;
+            line-height: 1;
+        }
+        
+        .chart-container {
+            height: 400px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .table {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .table thead th {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            padding: 1rem;
+        }
+        
+        .table td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary-green);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-leaf"></i>
+                Waste Management
+            </a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

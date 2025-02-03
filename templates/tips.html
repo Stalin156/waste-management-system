@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title text-success">Tips for {{ category }}</h2>
+        <ul class="list-group list-group-flush">
+            {% for tip in tips %}
+            <li class="list-group-item">
+                <i class="fas fa-leaf text-success mr-2"></i>{{ tip }}
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="mt-3">
+            <a href="{{ url_for('index') }}" class="btn btn-outline-success">
+                <i class="fas fa-arrow-left mr-1"></i>Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

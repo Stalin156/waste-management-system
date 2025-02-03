@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title text-success">Waste Entries</h2>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Category</th>
+                    <th>Weight (kg)</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in entries %}
+                <tr>
+                    <td>{{ entry.category }}</td>
+                    <td>{{ "%.2f"|format(entry.weight) }}</td>
+                    <td>{{ entry.description }}</td>
+                    <td>{{ entry.date.strftime('%Y-%m-%d %H:%M') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('index') }}" class="btn btn-outline-success">
+            <i class="fas fa-arrow-left mr-1"></i>Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

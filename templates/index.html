@@ -1,0 +1,151 @@
+<!-- index.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="card-title mb-0">
+                <i class="fas fa-chart-pie mr-2"></i>
+                Waste Analytics Dashboard
+            </h2>
+            <div class="d-flex gap-2">
+                <a href="{{ url_for('add_entry') }}" class="btn btn-success mr-2">
+                    <i class="fas fa-plus mr-2"></i>New Entry
+                </a>
+                <a href="{{ url_for('entries') }}" class="btn btn-outline-success">
+                    <i class="fas fa-list mr-2"></i>View All
+                </a>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            {% for category, weight in stats.items() %}
+            <div class="stat-card">
+                <div class="category-icon mb-3">
+                    {% if category == 'Organic' %}
+                        <i class="fas fa-apple-alt fa-2x text-success"></i>
+                    {% elif category == 'Recyclable' %}
+                        <i class="fas fa-recycle fa-2x text-success"></i>
+                    {% elif category == 'Hazardous' %}
+                        <i class="fas fa-exclamation-triangle fa-2x text-success"></i>
+                    {% else %}
+                        <i class="fas fa-trash fa-2x text-success"></i>
+                    {% endif %}
+                </div>
+                <h5 class="card-title">{{ category }}</h5>
+                <div class="stat-value">{{ "%.2f"|format(weight) }} kg</div>
+                <a href="{{ url_for('tips', category=category) }}" class="btn btn-outline-success btn-block">
+                    <i class="fas fa-lightbulb mr-2"></i>View Tips
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-chart-bar mr-2"></i>
+                    Waste Distribution
+                </h5>
+                <div class="chart-container">
+                    <canvas id="wasteChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body text-center">
+                <h5 class="card-title">Total Waste Collected</h5>
+                <div class="stat-value">{{ "%.2f"|format(total) }} kg</div>
+                <p class="text-muted">Total waste collected across all categories</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('wasteChart').getContext('2d');
+    const stats = (( stats|tojson|safe)) ;
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(stats),
+            datasets: [{
+                label: 'Waste by Category (kg)',
+                data: Object.values(stats),
+                backgroundColor: [
+                    'rgba(22, 101, 52, 0.8)',
+                    'rgba(5, 150, 105, 0.8)',
+                    'rgba(22, 163, 74, 0.8)',
+                    'rgba(34, 197, 94, 0.8)'
+                ],
+                borderColor: [
+                    'rgb(22, 101, 52)',
+                    'rgb(5, 150, 105)',
+                    'rgb(22, 163, 74)',
+                    'rgb(34, 197, 94)'
+                ],
+                borderWidth: 2,
+                borderRadius: 8,
+                maxBarThickness: 50
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        font: {
+                            family: 'Poppins',
+                            size: 12
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Waste Distribution by Category',
+                    color: '#166534',
+                    font: {
+                        family: 'Poppins',
+                        size: 16,
+                        weight: 'bold'
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    },
+                    ticks: {
+                        font: {
+                            family: 'Poppins'
+                        },
+                        color: '#166534'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            family: 'Poppins'
+                        },
+                        color: '#166534'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
