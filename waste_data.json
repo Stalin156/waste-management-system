@@ -1,0 +1,52 @@
+{
+  "entries": [
+    {
+      "category": "Recyclable",
+      "weight": 5.0,
+      "description": "hhh",
+      "date": "2025-02-02T21:28:49.669216"
+    },
+    {
+      "category": "Recyclable",
+      "weight": 10.0,
+      "description": "hhh",
+      "date": "2025-02-02T22:18:43.074786"
+    },
+    {
+      "category": "Organic",
+      "weight": 10.0,
+      "description": "mmmm",
+      "date": "2025-02-03T00:36:03.000632"
+    },
+    {
+      "category": "Hazardous",
+      "weight": 5.0,
+      "description": "nnn",
+      "date": "2025-02-03T00:36:29.356248"
+    },
+    {
+      "category": "General",
+      "weight": 20.0,
+      "description": "ccc",
+      "date": "2025-02-03T00:36:44.159214"
+    },
+    {
+      "category": "Recyclable",
+      "weight": 10.0,
+      "description": "djj\r\n",
+      "date": "2025-02-03T09:11:33.908693"
+    },
+    {
+      "category": "Organic",
+      "weight": 2.0,
+      "description": "ss\r\n",
+      "date": "2025-02-03T10:15:24.438822"
+    },
+    {
+      "category": "Recyclable",
+      "weight": 10.0,
+      "description": "ss",
+      "date": "2025-02-03T13:33:13.747706"
+    }
+  ]
+}
